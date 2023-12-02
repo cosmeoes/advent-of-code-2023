@@ -9,21 +9,10 @@ import (
 )
 
 func Problem2() {
-    lines, err := helpers.ReadFileLines("problem2.txt")
+    lines, err := helpers.ReadFileLines("day1/problem2.txt")
     if err != nil {
         log.Fatalf("Error reading input file %v", err)
     }
-
-    // for i, line := range lines {
-    //     newLine := strings.Builder{}
-    //     for j := 0; j < len(line); j++ {
-    //         var nextChar byte
-    //         nextChar, j = toNumber(line, j)
-    //         newLine.WriteByte(nextChar)
-    //     }
-
-    //     lines[i] = newLine.String()
-    // }
 
     numbers := make([]int, len(lines))
 
