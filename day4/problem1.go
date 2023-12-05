@@ -17,8 +17,8 @@ func Problem1() {
     for _, line := range lines {
 	numbers := strings.Split(line, ": ")[1]
 
-	winningNumbers := strings.Split(strings.TrimSpace(strings.Split(numbers, " | ")[0]), " ")
-	cardNumbers := strings.Split(strings.TrimSpace(strings.Split(numbers, " | ")[1]), " ")
+	winningNumbers := strings.Fields(strings.TrimSpace(strings.Split(numbers, " | ")[0]))
+	cardNumbers := strings.Fields(strings.TrimSpace(strings.Split(numbers, " | ")[1]))
 
 	var cardScore int
 	for _, cardNumber := range cardNumbers {
@@ -31,7 +31,6 @@ func Problem1() {
 	    } else {
 		cardScore *= 2
 	    }
-
 	}
 
 	score += cardScore
@@ -42,7 +41,7 @@ func Problem1() {
 
 func contains(s []string, e string) bool {
     for _, a := range s {
-        if a == e {
+        if strings.TrimSpace(a) == strings.TrimSpace(e) {
             return true
         }
     }
