@@ -11,5 +11,6 @@ func main() {
     // day2.Problem2()
     // day3.Problem1()
     // day3.Problem2()
-    day4.Problem1()
+    // day4.Problem1()
+    day4.Problem2()
 }
