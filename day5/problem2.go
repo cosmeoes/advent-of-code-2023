@@ -47,37 +47,13 @@ func Problem2() {
 	    continue
 	}
 
-	switch lines[i] {
-	case "seed-to-soil map:":
-	    currentMapIndex = 0
-	case "soil-to-fertilizer map:":
-	    currentMapIndex = 1
-	case "fertilizer-to-water map:":
-	    currentMapIndex = 2
-	case "water-to-light map:":
-	    currentMapIndex = 3
-	case "light-to-temperature map:":
-	    currentMapIndex = 4
-	case "temperature-to-humidity map:":
-	    currentMapIndex = 5
-	case "humidity-to-location map:":
-	    currentMapIndex = 6
-	default:
-	    data := strings.Fields(lines[i])
-	    destStart, _ := strconv.Atoi(data[0])
-	    sourceStart, _ := strconv.Atoi(data[1])
-	    rang, _ := strconv.Atoi(data[2])
-	    maps[currentMapIndex] = append(maps[currentMapIndex], Range{
-		destStart: destStart,
-		sourceStart: sourceStart,
-		rang: rang,
-	    })
-	}
+	i, maps[currentMapIndex] = mapToPrev(lines, i, []Range{})
+	currentMapIndex++
     }
 
     minLoc := math.MaxInt
     for _, seedRange := range seeds {
-	for seed := seedRange.start; seed < seedRange.start + seedRange.rang; seed++ {
+	for seed := seedRange.start; seed <= seedRange.start + seedRange.rang; seed++ {
 	    soil := getValue2(seed, 0, maps)
 	    fert := getValue2(soil, 1, maps);
 	    water := getValue2(fert, 2, maps)
@@ -86,7 +62,7 @@ func Problem2() {
 	    hum := getValue2(temp, 5, maps)
 	    loc := getValue2(hum, 6, maps)
 	    if loc < minLoc {
-		minLoc = soil
+		minLoc = loc
 	    }
 	}
     }
@@ -96,13 +72,33 @@ func Problem2() {
 
 func getValue2(source, mapPos int, maps [7][]Range) int {
     typeMap := maps[mapPos]
-    res := source
     for _, r := range typeMap {
 	if source >= r.sourceStart && source < r.sourceStart + r.rang {
-	    res = r.destStart + (source - r.sourceStart)
-	    break
+	    return r.destStart + (source - r.sourceStart)
 	}
     }
 
-    return res
+    return source
+}
+
+func mapToPrev(lines []string, i int, _ []Range) (int, []Range) {
+    var ranges []Range
+
+    i++
+    for ; i < len(lines); i++ {
+	if lines[i] == "" {
+	    break
+	}
+	data := strings.Fields(lines[i])
+	destStart, _ := strconv.Atoi(data[0])
+	sourceStart, _ := strconv.Atoi(data[1])
+	rang, _ := strconv.Atoi(data[2])
+	ranges = append(ranges, Range{
+	    destStart: destStart,
+	    sourceStart: sourceStart,
+	    rang: rang,
+	})
+    }
+
+    return i, ranges
 }
