@@ -1,7 +1,7 @@
 package main
 
 import (
-	"cosme.dev/aoc2023/day8"
+	"cosme.dev/aoc2023/day9"
 )
 
 func main() {
@@ -20,5 +20,6 @@ func main() {
     // day7.Problem1()
     // day7pt2.Problem2()
     // day8.Problem1();
-    day8.Problem2();
+    // day8.Problem2();
+    day9.Problem2()
 }
